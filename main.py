@@ -1,3 +1,4 @@
+from math import sqrt, log
 import random
 import time
 import sys
@@ -107,25 +108,42 @@ def compMove(c):
     possibleSpots = []
     winResultsCount = []
     timesSearched = []
+    ucbValue = []
+    bestUcb = []
+    totalSearches = 0
     possibleSpots = getSpots(hexChar, board)
-    count = 0
+    
     sys.stderr.write("Starting search\n")
     for i in possibleSpots:
         winResultsCount.append(0)
         timesSearched.append(0)
+        ucbValue.append(0)
     startTime = time.clock()
-##    while count < maxSearches:
+##    whiletotalSearches< maxSearches:
     while time.clock() - startTime < searchTime:
-        
-        outcome = simulateGame(c, spot)
-        count += 1
+        for i,spot in enumerate(possibleSpots):
+            if timesSearched[i] > 0:
+                ucbValue[i] = (winResultsCount[i] / timesSearched[i]) + (sqrt(log(totalSearches) / timesSearched[i]))
+        if all(ucbValue):
+            bestUcb = possibleSpots[ucbValue.index(max(ucbValue))]
+        else: bestUcb = random.choice(possibleSpots)
+        outcome = simulateGame(c, bestUcb)
+        totalSearches += 1
+        timesSearched[possibleSpots.index(bestUcb)] += 1
         if outcome:
-            winResultsCount[possibleSpots.index(spot)] += 1
-        else:
-            winResultsCount[possibleSpots.index(spot)] -= 1
-                
-    best = possibleSpots[winResultsCount.index(max(winResultsCount))]
-    sys.stderr.write("Searched " + str(count) + " in " + str(time.clock() - startTime) + "s\n")
+            winResultsCount[possibleSpots.index(bestUcb)] += 1
+
+    best = []
+    bestWinRate = 0
+    for i,spot in enumerate(possibleSpots):
+        if timesSearched[i] > 0:
+            winRate = (winResultsCount[i] / timesSearched[i])
+            if winRate > bestWinRate:
+                best = spot
+                bestWinRate = winRate         
+    
+    sys.stderr.write("Searched " + str(totalSearches) + " in " + str(time.clock() - startTime) + "s\n")
+    sys.stderr.write(str(best) + " won " + str(bestWinRate * 100) +"% of the time\n")
     
     if len(best) > 0:
         return best
