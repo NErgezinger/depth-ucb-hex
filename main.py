@@ -210,7 +210,7 @@ while not cmdQuit:
     cmd = input().split(" ")
     
     if cmd[0] == "name":
-        print("= textHex")
+        print("= depth-ucb-hex")
         print()
         
     elif cmd[0] == "version":
