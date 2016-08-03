@@ -33,8 +33,6 @@ def resetBoard(b):
     return b
 board = resetBoard(board)
 
-
-
 def printBoard(b):
     for i in range(size - 1, -1, -1):
         printRow = []
@@ -110,23 +108,20 @@ def compMove(c):
     timesSearched = []
     ucbValue = []
     bestUcb = []
-    totalSearches = 0
+    totalSearches = size*size
     possibleSpots = getSpots(hexChar, board)
     
     sys.stderr.write("Starting search\n")
     for i in possibleSpots:
         winResultsCount.append(0)
-        timesSearched.append(0)
+        timesSearched.append(1)
         ucbValue.append(0)
     startTime = time.clock()
 ##    whiletotalSearches< maxSearches:
     while time.clock() - startTime < searchTime:
         for i,spot in enumerate(possibleSpots):
-            if timesSearched[i] > 0:
-                ucbValue[i] = (winResultsCount[i] / timesSearched[i]) + (sqrt(2) * (sqrt(log(totalSearches) / timesSearched[i])))
-        if all(ucbValue):
-            bestUcb = possibleSpots[ucbValue.index(max(ucbValue))]
-        else: bestUcb = random.choice(possibleSpots)
+            ucbValue[i] = (winResultsCount[i] / timesSearched[i]) + (sqrt(2) * (sqrt(log(totalSearches) / timesSearched[i])))
+        bestUcb = possibleSpots[ucbValue.index(max(ucbValue))]
         outcome = simulateGame(c, bestUcb)
         totalSearches += 1
         timesSearched[possibleSpots.index(bestUcb)] += 1
