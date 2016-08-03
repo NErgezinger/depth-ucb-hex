@@ -123,7 +123,7 @@ def compMove(c):
     while time.clock() - startTime < searchTime:
         for i,spot in enumerate(possibleSpots):
             if timesSearched[i] > 0:
-                ucbValue[i] = (winResultsCount[i] / timesSearched[i]) + (sqrt(log(totalSearches) / timesSearched[i]))
+                ucbValue[i] = (winResultsCount[i] / timesSearched[i]) + (sqrt(2) * (sqrt(log(totalSearches) / timesSearched[i])))
         if all(ucbValue):
             bestUcb = possibleSpots[ucbValue.index(max(ucbValue))]
         else: bestUcb = random.choice(possibleSpots)
