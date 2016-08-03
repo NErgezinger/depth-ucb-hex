@@ -108,7 +108,7 @@ def compMove(c):
     timesSearched = []
     ucbValue = []
     bestUcb = []
-    totalSearches = size*size
+    totalSearches = 1
     possibleSpots = getSpots(hexChar, board)
     
     sys.stderr.write("Starting search\n")
