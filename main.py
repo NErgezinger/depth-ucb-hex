@@ -134,7 +134,7 @@ def compMove(c):
     bestPercent = winResultsCount[bestIndex] / timesSearched[bestIndex]
     
     sys.stderr.write("Searched " + str(totalSearches) + " in " + str(time.clock() - startTime) + "s\n")
-    sys.stderr.write(str(best) + " won " + str(bestPercent * 100) +"% of the time\n")
+    sys.stderr.write(str(best) + " won " + str(bestPercent * 100) +"% of random games\n")
     
     if len(best) > 0:
         return best
