@@ -121,12 +121,13 @@ def compMove(c):
     while time.clock() - startTime < searchTime:
         for i,spot in enumerate(possibleSpots):
             ucbValue[i] = (winResultsCount[i] / timesSearched[i]) + (sqrt(2) * (sqrt(log(totalSearches) / timesSearched[i])))
-        bestUcb = possibleSpots[ucbValue.index(max(ucbValue))]
+        index = ucbValue.index(max(ucbValue))
+        bestUcb = possibleSpots[index]
         outcome = simulateGame(c, bestUcb)
         totalSearches += 1
-        timesSearched[possibleSpots.index(bestUcb)] += 1
+        timesSearched[index] += 1
         if outcome:
-            winResultsCount[possibleSpots.index(bestUcb)] += 1
+            winResultsCount[index] += 1
 
     bestIndex = timesSearched.index(max(timesSearched))
     best = possibleSpots[bestIndex]
