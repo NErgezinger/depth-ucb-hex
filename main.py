@@ -128,17 +128,12 @@ def compMove(c):
         if outcome:
             winResultsCount[possibleSpots.index(bestUcb)] += 1
 
-    best = []
-    bestWinRate = 0
-    for i,spot in enumerate(possibleSpots):
-        if timesSearched[i] > 0:
-            winRate = (winResultsCount[i] / timesSearched[i])
-            if winRate > bestWinRate:
-                best = spot
-                bestWinRate = winRate         
+    bestIndex = timesSearched.index(max(timesSearched))
+    best = possibleSpots[bestIndex]
+    bestPercent = winResultsCount[bestIndex] / timesSearched[bestIndex]
     
     sys.stderr.write("Searched " + str(totalSearches) + " in " + str(time.clock() - startTime) + "s\n")
-    sys.stderr.write(str(best) + " won " + str(bestWinRate * 100) +"% of the time\n")
+    sys.stderr.write(str(best) + " won " + str(bestPercent * 100) +"% of the time\n")
     
     if len(best) > 0:
         return best
