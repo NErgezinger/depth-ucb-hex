@@ -9,7 +9,7 @@ gameWon = False
 hexChar = "*"
 black = "b"
 white = "w"
-size = 5
+size = 13
 searchTime = 10
 maxSearches = 50000
 cmdQuit = False
@@ -113,7 +113,7 @@ def compMove(c):
     
     sys.stderr.write("Starting search\n")
     for i in possibleSpots:
-        winResultsCount.append(0)
+        winResultsCount.append(1)
         timesSearched.append(1)
         ucbValue.append(0)
     startTime = time.clock()
@@ -260,7 +260,7 @@ while not cmdQuit:
         print()
 
     elif cmd[0] == "showboard":
-        print("= ")
+        print("= ucb")
         printBoard(board)
         print()
 
