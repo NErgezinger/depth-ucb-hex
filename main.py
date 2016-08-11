@@ -9,7 +9,7 @@ gameWon = False
 hexChar = "*"
 black = "b"
 white = "w"
-size = 13
+size = 5
 searchTime = 10
 maxSearches = 50000
 cmdQuit = False
@@ -162,9 +162,7 @@ def simulateGame(simPlayer, startMove):
                 rBlackMove = random.choice(emptySpots)
                 simBoard[rBlackMove[0]][rBlackMove[1]] = black
                 emptySpots.remove(rBlackMove)
-##            if len(emptySpots) < 5:
-##                if checkWin(simBoard, black):
-##                    return True
+                
         if checkWin(simBoard, black):
             return True
         else: return False
